@@ -1,8 +1,7 @@
 import React from "react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { MoreHorizontal, Clock, Calendar, Edit, Eye, Mail, Phone, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MoreHorizontal, Clock, Calendar, Edit, Eye, Trash2, Mail, Phone, UserPlus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,89 +11,69 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function LeadTabs() {
-  return (
-    <Tabs defaultValue="all" className="w-full">
-      <TabsList className="grid grid-cols-5 mb-8">
-        <TabsTrigger value="all">All</TabsTrigger>
-        <TabsTrigger value="prospect">Prospect</TabsTrigger>
-        <TabsTrigger value="contacted">Contacted</TabsTrigger>
-        <TabsTrigger value="negotiation">Negotiation</TabsTrigger>
-        <TabsTrigger value="closed">Closed</TabsTrigger>
-      </TabsList>
-      
-      <TabsContent value="all">
-        <LeadTable status="All" />
-      </TabsContent>
-      
-      <TabsContent value="prospect">
-        <LeadTable status="Prospect" />
-      </TabsContent>
-      
-      <TabsContent value="contacted">
-        <LeadTable status="Contacted" />
-      </TabsContent>
-      
-      <TabsContent value="negotiation">
-        <LeadTable status="Negotiation" />
-      </TabsContent>
-      
-      <TabsContent value="closed">
-        <LeadTable status="Closed" />
-      </TabsContent>
-    </Tabs>
-  );
+interface InternLeadTableProps {
+  internId?: number;
 }
 
-interface LeadTableProps {
-  status: string;
-}
-
-function LeadTable({ status }: LeadTableProps) {
+export function InternLeadTable({ internId }: InternLeadTableProps) {
   // Sample data - in a real app, this would come from an API
   const leads = [
     { 
       id: 1, 
-      name: "Jane Cooper", 
-      email: "jane@microsoft.com", 
+      name: "Michael Brown", 
+      email: "michael@example.com", 
       region: "North America", 
       status: "Prospect", 
-      lastUpdated: "2023-12-15", 
-      followUp: "2024-02-01"
+      lastUpdated: "2024-01-12", 
+      followUp: "2024-01-30",
+      internId: 1
     },
     { 
       id: 2, 
-      name: "Wade Warren", 
-      email: "wade@google.com", 
-      region: "Europe", 
+      name: "Lisa Chen", 
+      email: "lisa@example.com", 
+      region: "Asia Pacific", 
       status: "Contacted", 
-      lastUpdated: "2023-12-20", 
-      followUp: "2024-01-28"
+      lastUpdated: "2024-01-15", 
+      followUp: "2024-01-29",
+      internId: 2
     },
     { 
       id: 3, 
-      name: "Esther Howard", 
-      email: "esther@apple.com", 
-      region: "Asia Pacific", 
+      name: "Robert Smith", 
+      email: "robert@example.com", 
+      region: "Europe", 
       status: "Negotiation", 
-      lastUpdated: "2024-01-05", 
-      followUp: "2024-01-25"
+      lastUpdated: "2024-01-10", 
+      followUp: "2024-01-25",
+      internId: 3
     },
     { 
       id: 4, 
-      name: "Cameron Williamson", 
-      email: "cameron@tesla.com", 
-      region: "South America", 
+      name: "Emily Johnson", 
+      email: "emily@example.com", 
+      region: "North America", 
+      status: "Prospect", 
+      lastUpdated: "2024-01-18", 
+      followUp: "2024-02-05",
+      internId: 4
+    },
+    { 
+      id: 5, 
+      name: "David Wilson", 
+      email: "david@example.com", 
+      region: "Europe", 
       status: "Closed", 
-      lastUpdated: "2024-01-10", 
-      followUp: "2024-02-10"
+      lastUpdated: "2024-01-08", 
+      followUp: "2024-02-08",
+      internId: 1
     },
   ];
 
-  // Filter leads based on status (except for "All")
-  const filteredLeads = status === "All" 
-    ? leads 
-    : leads.filter(lead => lead.status === status);
+  // Filter leads by intern if internId is provided
+  const filteredLeads = internId 
+    ? leads.filter(lead => lead.internId === internId)
+    : leads;
 
   return (
     <Card className="overflow-hidden">
@@ -150,12 +129,15 @@ function LeadTable({ status }: LeadTableProps) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuLabel>Intern Lead Actions</DropdownMenuLabel>
                         <DropdownMenuItem>
                           <Mail className="mr-2 h-4 w-4" /> Email Lead
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <Phone className="mr-2 h-4 w-4" /> Call Lead
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <UserPlus className="mr-2 h-4 w-4" /> Reassign Intern
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="text-red-500">

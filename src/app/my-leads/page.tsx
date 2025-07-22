@@ -4,7 +4,7 @@ import React from "react";
 import { DashboardLayout } from "@/components/dashboard/layout";
 import { LeadTabs } from "@/components/dashboard/lead-tabs";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Filter } from "lucide-react";
 
 export default function MyLeads() {
   return (
@@ -17,9 +17,14 @@ export default function MyLeads() {
               Manage and track your personal leads.
             </p>
           </div>
-          <Button className="bg-[#6C00FF]">
-            <Plus className="mr-2 h-4 w-4" /> Add Lead
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline">
+              <Filter className="mr-2 h-4 w-4" /> Filter
+            </Button>
+            <Button className="bg-[#6C00FF]">
+              <Plus className="mr-2 h-4 w-4" /> Add Lead
+            </Button>
+          </div>
         </div>
         
         <LeadTabs />
